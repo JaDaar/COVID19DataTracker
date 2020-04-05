@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity.Migrations.Sql;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,11 +21,13 @@ namespace COVID19DataTrackImporter
         private COVID19Context covid19Context;
         private bool isLoaded = false;
         private List<UsStates> dataRecords;
+        private List<UsCounty> dataRecordCounties;
         public fDataTrack()
         {
             InitializeComponent();
             covid19Context = new COVID19Context();
             dataRecords=new List<UsStates>();
+            dataRecordCounties=new List<UsCounty>();
         }
 
         private void InitializeGrid()
@@ -42,46 +45,135 @@ namespace COVID19DataTrackImporter
             dgvMain.BackgroundColor = Color.Navy;
         }
 
-        private void cmdImport_Click(object sender, EventArgs e)
+
+
+        private void cmdImportStates_Click(object sender, EventArgs e)
         {
-            var reader = new StreamReader("D:\\GIT\\COVID-19\\covid-19-data\\us-states.csv");
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-            {
-                var record = new Models.UsStates();
-                var records = csv.EnumerateRecords(record);
-                
-                try
-                {
-                    foreach (var r in records)
-                    {
-                        this.dgvMain.Rows.Add(r.state, r.date, r.cases, r.deaths);
-                        var dm = new UsStates
-                        {
-                            date = r.date,
-                            state = r.state,
-                            fips = r.fips,
-                            cases = r.cases,
-                            deaths = r.deaths
-                        };
-                        dataRecords.Add(dm);
-                    }
+            ImportNYTimesStatesData();
 
-                    isLoaded = true;
-                    this.cmdUpload.Enabled = true;
-                }
-                catch(Exception)
-                {
-                    isLoaded = false;
-                    this.cmdUpload.Enabled = false;
-                    throw;
-                }
-            }
-
-            Console.ReadLine();
         }
 
+        private void ImportNYTimesStatesData()
+        {
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                var directory = @"D:\\GIT\\COVID-19\\covid-19-data";
+                openFileDialog.InitialDirectory = directory;
+                openFileDialog.Filter = "csv files (*.csv)|*.csv";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
 
 
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+
+                    //Read the contents of the file into a stream
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                        {
+                            var record = new Models.UsStates();
+                            var records = csv.EnumerateRecords(record);
+
+                            try
+                            {
+                                foreach (var r in records)
+                                {
+                                    this.dgvMain.Rows.Add(r.state, r.date, r.cases, r.deaths);
+                                    var dm = new UsStates
+                                    {
+                                        date = r.date,
+                                        state = r.state,
+                                        fips = r.fips,
+                                        cases = r.cases,
+                                        deaths = r.deaths
+                                    };
+                                    dataRecords.Add(dm);
+                                }
+
+                                isLoaded = true;
+                                this.cmdUpload.Enabled = true;
+                            }
+                            catch (Exception)
+                            {
+                                isLoaded = false;
+                                this.cmdUpload.Enabled = false;
+                                throw;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        private void ImportNYTimesCountyData()
+        {
+            var fileContent = string.Empty;
+            var filePath = string.Empty;
+
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                var directory = @"D:\\GIT\\COVID-19\\covid-19-data";
+                openFileDialog.InitialDirectory = directory;
+                openFileDialog.Filter = "csv files (*.csv)|*.csv";
+                openFileDialog.FilterIndex = 1;
+                openFileDialog.RestoreDirectory = true;
+
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    //Get the path of specified file
+                    filePath = openFileDialog.FileName;
+
+                    //Read the contents of the file into a stream
+                    var fileStream = openFileDialog.OpenFile();
+
+                    using (StreamReader reader = new StreamReader(fileStream))
+                    {
+                        using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+                        {
+                            var record = new Models.UsCounty();
+                            var records = csv.EnumerateRecords(record);
+
+                            try
+                            {
+                                foreach (var r in records)
+                                {
+                                    this.dgvMain.Rows.Add(r.state,r.date,r.cases,r.deaths);
+                                    var dm = new UsCounty
+                                    {
+                                        date = r.date,
+                                        county = r.county,
+                                        fips = r.fips,
+                                        state = r.state,
+                                        cases = r.cases,
+                                        deaths = r.deaths
+                                    };
+                                    dataRecordCounties.Add(dm);
+                                }
+
+                                isLoaded = true;
+                                this.button2.Enabled = false;
+                                this.button1.Enabled = true;
+                            }
+                            catch (Exception e)
+                            {
+                                isLoaded = false;
+                                this.cmdUpload.Enabled = false;
+                                Console.WriteLine($"{e}");
+                            }
+                        }
+                    }
+                }
+            }
+        }
         private void Form1_Load(object sender, EventArgs e)
         {
             InitializeGrid();
@@ -96,12 +188,13 @@ namespace COVID19DataTrackImporter
             }
 
             cmdUpload.Enabled = false;
+            cmdImportStates.Enabled = false;
         }
 
         private void UploadStatesReferenceData()
         {
 
-            string[] ExclusionList= {"District of Columbia", "Guam", "Puerto Rico", "Virgin Islands"};
+            string[] ExclusionList= {"District of Columbia", "Guam", "Puerto Rico", "Virgin Islands", "Northern Mariana Islands" };
             var statesList = (from d in dataRecords select d.state).Distinct().ToList();
             statesList.Sort();
             foreach (var item in statesList)
@@ -127,6 +220,40 @@ namespace COVID19DataTrackImporter
             }
 
             covid19Context.SaveChanges();
+            SendMessageStatus("States Data Processing");
+        }
+
+        private void UploadCountyReferenceData()
+        {
+            Application.DoEvents();
+            var cnt = 0;
+            foreach (var itemRec in dataRecordCounties)
+            {
+                covid19Context.DEV_Counties.Add(new DEV_County
+                {
+                    CountyNm = itemRec.county,
+                    StateNm = itemRec.state
+                });
+                cnt += 1;
+            }
+            covid19Context.SaveChanges();
+            SendMessageStatus("County Data Processing");
+        }
+
+        private void SendMessageStatus(string msg)
+        {
+            MessageBox.Show(msg, "Import Processing is Completed.", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            dgvMain.DataSource =new List<string>();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            ImportNYTimesCountyData();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            UploadCountyReferenceData();
         }
     }
 

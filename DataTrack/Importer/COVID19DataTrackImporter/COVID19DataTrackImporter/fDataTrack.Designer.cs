@@ -28,14 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            this.cmdImport = new System.Windows.Forms.Button();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.cmdImportStates = new System.Windows.Forms.Button();
             this.dgvMain = new System.Windows.Forms.DataGridView();
             this.State = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Cases = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Deaths = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.cmdUpload = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvMain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -44,16 +46,16 @@
             this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // cmdImport
+            // cmdImportStates
             // 
-            this.cmdImport.Location = new System.Drawing.Point(27, 69);
-            this.cmdImport.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.cmdImport.Name = "cmdImport";
-            this.cmdImport.Size = new System.Drawing.Size(216, 52);
-            this.cmdImport.TabIndex = 0;
-            this.cmdImport.Text = "Import";
-            this.cmdImport.UseVisualStyleBackColor = true;
-            this.cmdImport.Click += new System.EventHandler(this.cmdImport_Click);
+            this.cmdImportStates.Location = new System.Drawing.Point(27, 69);
+            this.cmdImportStates.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.cmdImportStates.Name = "cmdImportStates";
+            this.cmdImportStates.Size = new System.Drawing.Size(216, 52);
+            this.cmdImportStates.TabIndex = 0;
+            this.cmdImportStates.Text = "Import States";
+            this.cmdImportStates.UseVisualStyleBackColor = true;
+            this.cmdImportStates.Click += new System.EventHandler(this.cmdImportStates_Click);
             // 
             // dgvMain
             // 
@@ -69,19 +71,19 @@
             this.dgvMain.Location = new System.Drawing.Point(0, 0);
             this.dgvMain.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dgvMain.Name = "dgvMain";
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Arial Narrow", 8.1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.Format = "C0";
-            dataGridViewCellStyle1.NullValue = null;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvMain.RowHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Arial Narrow", 8.1F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.Format = "C0";
+            dataGridViewCellStyle3.NullValue = null;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgvMain.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgvMain.RowHeadersWidth = 102;
             this.dgvMain.RowTemplate.Height = 20;
-            this.dgvMain.Size = new System.Drawing.Size(1413, 844);
+            this.dgvMain.Size = new System.Drawing.Size(2770, 844);
             this.dgvMain.TabIndex = 1;
             // 
             // State
@@ -121,16 +123,40 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.button1);
+            this.splitContainer1.Panel1.Controls.Add(this.button2);
             this.splitContainer1.Panel1.Controls.Add(this.cmdUpload);
-            this.splitContainer1.Panel1.Controls.Add(this.cmdImport);
+            this.splitContainer1.Panel1.Controls.Add(this.cmdImportStates);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dgvMain);
-            this.splitContainer1.Size = new System.Drawing.Size(1541, 844);
-            this.splitContainer1.SplitterDistance = 123;
+            this.splitContainer1.Size = new System.Drawing.Size(3037, 844);
+            this.splitContainer1.SplitterDistance = 262;
             this.splitContainer1.SplitterWidth = 5;
             this.splitContainer1.TabIndex = 2;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(23, 426);
+            this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(216, 52);
+            this.button1.TabIndex = 3;
+            this.button1.Text = "Upload States";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(23, 366);
+            this.button2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(216, 52);
+            this.button2.TabIndex = 2;
+            this.button2.Text = "Import";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // cmdUpload
             // 
@@ -148,7 +174,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(16F, 31F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1541, 844);
+            this.ClientSize = new System.Drawing.Size(3037, 844);
             this.Controls.Add(this.splitContainer1);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.MaximizeBox = false;
@@ -168,7 +194,7 @@
 
         #endregion
 
-        private System.Windows.Forms.Button cmdImport;
+        private System.Windows.Forms.Button cmdImportStates;
         private System.Windows.Forms.DataGridView dgvMain;
         private System.Windows.Forms.DataGridViewTextBoxColumn State;
         private System.Windows.Forms.DataGridViewTextBoxColumn Date;
@@ -176,6 +202,8 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Deaths;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Button cmdUpload;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 
