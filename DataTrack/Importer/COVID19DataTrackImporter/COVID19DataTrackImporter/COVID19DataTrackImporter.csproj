@@ -80,6 +80,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>COVID19Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UsCounty.cs" />
     <Compile Include="Models\UsStates.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
